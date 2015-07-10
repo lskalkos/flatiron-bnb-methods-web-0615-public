@@ -42,11 +42,11 @@ describe Reservation do
     end
 
     it 'is invalid without a checkin' do
-      expect(@invalidcheckin).to_not be_valid 
+      expect(@invalid_checkin).to_not be_valid
     end
 
     it 'is invalid without a checkout' do
-      expect(@invalidcheckout).to_not be_valid 
+      expect(@invalid_checkout).to_not be_valid
     end
 
     it 'validates that you cannot make a reservation on your own listing' do 
