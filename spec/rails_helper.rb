@@ -40,7 +40,7 @@ RSpec.configure do |config|
     @reservation3 = Reservation.create(checkin: '2014-06-02', checkout: '2014-06-30', listing_id: Listing.last.id, guest_id: User.find_by(id: 6).id, :status => "accepted")
     @reservation4 = Reservation.create(checkin: '2014-05-02', checkout: '2014-05-08', listing_id: @listing1.id, guest_id: @tristan.id, :status => "accepted")
     @reservation5 = Reservation.create(checkin: '2014-05-10', checkout: '2014-05-15', listing_id: @listing1.id, guest_id: @logan.id, :status => "accepted")
-    
+
     @review1 = Review.create(description: "This place was great!", rating: 5, guest_id: User.find_by(id: 4).id, reservation_id: Reservation.first.id)
     @review2 = Review.create(description: "Great place, close to subway!", rating: 4, guest_id: User.find_by(id: 5).id, reservation_id: Reservation.first.id)
     @review3 = Review.create(description: "Meh, the host I shared a room with snored.", rating: 3, guest_id: User.find_by(id: 6).id, reservation_id: Reservation.last.id)
