@@ -4,8 +4,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :guest, :class_name => "User"
   has_one :review
 
-  validates :checkin, presence: true
-  validates :checkout, presence: true
+  validates :checkin, :checkout, presence: true
 
   validate :checkin_before_checkout
   validate :available_at_checkin
@@ -52,5 +51,7 @@ class Reservation < ActiveRecord::Base
   def checkin_before_checkout
     errors.add(:checkin, "invalid checkin") unless self.checkin_before_checkout?
   end
+
+  ##make sure guest is not host
 
 end

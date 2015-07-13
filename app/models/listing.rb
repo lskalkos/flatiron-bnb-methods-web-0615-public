@@ -5,27 +5,25 @@ class Listing < ActiveRecord::Base
   has_many :reviews, :through => :reservations
   has_many :guests, :class_name => "User", :through => :reservations
 
-  validates :address, presence: true
-  validates :listing_type, presence: true
-  validates :title, presence: true
-  validates :description, presence: true
-  validates :price, presence: true
-  validates :neighborhood, presence: true
-
+  validates :address, :listing_type, :title, :description, :price, :neighborhood, presence: true
   after_create :set_user_host_to_true
-  after_destroy :set_user_host_to_false
+  after_destroy :set_user_host_to_false_if_listings_empty
+
+  #Callbacks
 
   def set_user_host_to_true
     self.host.host = true
     self.host.save
   end
 
-  def set_user_host_to_false
+  def set_user_host_to_false_if_listings_empty
     if self.host.listings.empty?
       self.host.host = false
       self.host.save
     end
   end
+
+  #Custom Methods
 
   def number_of_reviews
     self.reviews.size.to_f
@@ -40,18 +38,16 @@ class Listing < ActiveRecord::Base
   end
 
   def date_falls_on_a_reservation?(date)
-    reservations = Listing.joins(:reservations).where('? BETWEEN reservations.checkin AND reservations.checkout', date)
-    !reservations.empty?
+    reservations.where('? BETWEEN reservations.checkin AND reservations.checkout', date).empty?
   end
 
   def available_at_checkin?(checkin_date)
-    !date_falls_on_a_reservation?(checkin_date)
+    date_falls_on_a_reservation?(checkin_date)
   end
 
   def available_at_checkout?(checkout_date)
-    !date_falls_on_a_reservation?(checkout_date)
+    date_falls_on_a_reservation?(checkout_date)
   end
-
 
 
 end

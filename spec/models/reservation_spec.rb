@@ -49,7 +49,7 @@ describe Reservation do
       expect(@invalid_checkout).to_not be_valid
     end
 
-    it 'validates that you cannot make a reservation on your own listing' do 
+    it 'validates that you cannot make a reservation on your own listing' do
       expect(@invalid_same_ids).to_not be_valid
     end
 
